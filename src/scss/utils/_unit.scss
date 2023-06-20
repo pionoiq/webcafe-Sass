@@ -1,1 +1,31 @@
-// util.scss
+@use "sass:math";
+
+// 루트 요소 기본 단위 --------------------------------------------------------------- /
+$rootUnit: 16px !default;
+// $rootUnit: 16px;
+
+// 단위 제거 함수 ------------------------------------------------------------------ /
+@function removeUnit($value) {
+  // @return ($value / ($value * 0 + 1));
+  @return math.div($value, $value * 0 + 1);
+  // 단위가 다를 경우 발생하는 오류를 방지하기 위해 뒤에도 value를 넣고 0을 곱해 단위를 제거함
+}
+
+// px을 rem 단위로 변경하는 함수 ------------------------------------------------------- /
+@function rem($value, $base: $rootUnit) {
+  // $removeValue: removeUnit($value);
+  // $removeBase: removeUnit($base);
+  // @return math.div($removeValue, $removeBase) * 1rem;
+  // 위의 코드를 한줄로 정리
+  @return (removeUnit(math.div($value, $base))) * 1rem;
+}
+
+// px을 em 단위로 변경하는 함수 ------------------------------------------------------- /
+@function em($value, $base: $rootUnit) {
+  @return (removeUnit(math.div($value, $base))) * 1em;
+}
+
+// @debug 10px * 1;
+// @debug 10px * 1px;
+// @debug math.div(16px, 1);
+// @debug math.div(16px, 1px);

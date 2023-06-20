@@ -1,1 +1,38 @@
-// mixin.scss
+@use "./../utils/unit" as *;
+// utils폴더 자체를 호출하면 mixin도 포함이 되기 때문에 오류 발생
+
+@mixin pos {
+  position: absolute;
+}
+
+@mixin posCenterX {
+  @include pos;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@mixin posCenterY {
+  @include pos;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@mixin posCenter {
+  @include pos;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin containerMax($max-width: 1024px) {
+  max-width: rem($max-width);
+  @include autoMargin;
+}
+
+@mixin paddingX($spacing) {
+  padding-left: rem($spacing);
+  padding-right: rem($spacing);
+}
+
+@mixin autoMargin {
+  margin-left: auto;
+  margin-right: auto;
+}
