@@ -10,6 +10,11 @@
   left: 50%;
   transform: translateX(-50%);
 }
+@mixin posBottom {
+  @include pos;
+  top: 100%;
+  transform: translateX(-100%);
+}
 @mixin posCenterY {
   @include pos;
   top: 50%;
@@ -25,6 +30,11 @@
 @mixin containerMax($max-width: 1024px) {
   max-width: rem($max-width);
   @include autoMargin;
+}
+
+@mixin paddingY($spacing) {
+  padding-top: rem($spacing);
+  padding-bottom: rem($spacing);
 }
 
 @mixin paddingX($spacing) {
