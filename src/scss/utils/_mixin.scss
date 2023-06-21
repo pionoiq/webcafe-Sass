@@ -1,8 +1,27 @@
 @use "./../utils/unit" as *;
 // utils폴더 자체를 호출하면 mixin도 포함이 되기 때문에 오류 발생
 
+// 최댓값
+@mixin containerMax($max-width: 1024px) {
+  max-width: rem($max-width);
+  @include autoMargin;
+}
+
+// Position 관련 믹스인
 @mixin pos {
   position: absolute;
+}
+
+@mixin posLeftTop($l: 0, $t: 0) {
+  @include pos;
+  top: $t;
+  left: $l;
+}
+
+@mixin posRightTop($r: 0, $t: 0) {
+  @include pos;
+  top: $t;
+  right: $r;
 }
 
 @mixin posCenterX {
@@ -10,26 +29,35 @@
   left: 50%;
   transform: translateX(-50%);
 }
-@mixin posBottom {
+
+@mixin posBottomY {
   @include pos;
   top: 100%;
-  transform: translateX(-100%);
+  transform: translateY(-100%);
 }
+
 @mixin posCenterY {
   @include pos;
   top: 50%;
   transform: translateY(-50%);
 }
+
 @mixin posCenter {
   @include pos;
-  top: 50%;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
 }
 
-@mixin containerMax($max-width: 1024px) {
-  max-width: rem($max-width);
-  @include autoMargin;
+// padding 관련 믹스인
+@mixin padding($spacing) {
+  @include paddingX;
+  @include paddingY;
+}
+
+@mixin paddingX($spacing) {
+  padding-left: rem($spacing);
+  padding-right: rem($spacing);
 }
 
 @mixin paddingY($spacing) {
@@ -37,9 +65,40 @@
   padding-bottom: rem($spacing);
 }
 
-@mixin paddingX($spacing) {
-  padding-left: rem($spacing);
-  padding-right: rem($spacing);
+@mixin padding($spacing) {
+  padding: rem($spacing);
+}
+
+// margin 관련 믹스인
+@mixin marginY($marginY: 0) {
+  margin-top: rem($marginY);
+  margin-bottom: rem($marginY);
+}
+
+@mixin marginX($marginX: 0) {
+  margin-left: rem($marginX);
+  margin-right: rem($marginX);
+}
+
+@mixin autoMargin($marginX: auto) {
+  margin-left: $marginX;
+  margin-right: $marginX;
+}
+
+// margin 관련 믹스인
+@mixin marginX($spacing) {
+  margin-left: rem($spacing);
+  margin-right: rem($spacing);
+}
+
+@mixin marginY($spacing) {
+  margin-top: rem($spacing);
+  margin-bottom: rem($spacing);
+}
+
+@mixin margin($spacing) {
+  @include marginX;
+  @include marginY;
 }
 
 @mixin autoMargin {
