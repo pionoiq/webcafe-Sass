@@ -1,5 +1,66 @@
-// 미디어쿼리 믹스인
+@use "sass:map";
 
+// Breakpoints
+// map 타입
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+@function errorMessage($breakpoint-name) {
+  @return "#{$breakpoint-name} : 중단점이 유효하지 않습니다.";
+  // 인터폴레이션
+}
+@mixin respond-from($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    // map.has-key: 해당 키가 존재하는지를 확인하는 메서드
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
+    // map.get: 키의 값을 가지고 오는 메서드
+
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+  } @else {
+    @error errorMessage($breakpoint);
+  }
+}
+
+@mixin respond-until($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    $breakpoint-value: map.get($breakpoints, $breakpoint);
+
+    @media (max-width: ($breakpoint-value - 1)) {
+      @content;
+    }
+  } @else {
+    @error errorMessage($breakpoint);
+  }
+}
+
+@mixin respond-range($from, $until) {
+  @if map.has-key($breakpoints, $from) and map.has-key($breakpoints, $until) {
+    // from을 breakpoints에서 찾고 until을 breakpoints에서 찾으면~
+    $from-value: map.get($breakpoints, $from);
+    $until-value: map.get($breakpoints, $until);
+
+    @media (min-width: $from-value) and (max-width: ($until-value - 1)) {
+      @content;
+    }
+  } @else {
+    @if (map.has-key($breakpoints, $from) == false) {
+      @error errorMessage($from);
+    }
+
+    @if (map.has-key($breakpoints, $until) == false) {
+      @error errorMessage($until);
+    }
+  }
+}
+
+// 미디어 쿼리 중단점 (Breakpoints) --------------------------------------------------------------- /
 $break: 768px;
 
 @mixin mobile {
@@ -10,5 +71,21 @@ $break: 768px;
 @mixin desktop {
   @media (min-width: #{$break}) {
     @content;
+  }
+}
+
+@mixin media($media) {
+  @if $media == "mobile" {
+    @media (max-width: ($break - 1)) {
+      @content;
+    }
+  }
+  @if $media == "desktop" {
+    @media (min-width: $break) {
+      @content;
+    }
+  }
+  @if $media != "mobile" and $media != "desktop" {
+    @error '미디어 유형이 유효하지 않습니다.';
   }
 }
