@@ -1,1 +1,110 @@
-// home.scss
+@use "./../utils/" as *;
+
+.appMain {
+  @include paddingX(20px);
+  @include paddingY(16px);
+
+  // 모바일
+  @include mobile {
+    @include gridbox(1, 100%, 16px);
+    .book {
+    }
+    .news {
+      order: -1;
+    }
+    .board {
+    }
+    .favorite {
+    }
+    .twitter {
+    }
+  }
+
+  @include desktop {
+    @include containerMax;
+    // grid-template-columns: repeat(12, 1fr);
+    // grid-template-rows: auto;
+    // gap: 16px 20px;
+    @include gridbox(12, 1fr, 16px, 20px);
+    grid-template-areas:
+      "news news news news news news news news news news news news"
+      "book book book book twitter twitter twitter twitter twitter favorite favorite favorite"
+      "book book book book . board board board board board board board";
+    // row-gap: 16px;
+    // column-gap: 20px;
+    .book {
+      grid-area: book;
+    }
+    .news {
+      grid-area: news;
+    }
+    .board {
+      grid-area: board;
+    }
+    .favorite {
+      grid-area: favorite;
+    }
+    .twitter {
+      grid-area: twitter;
+    }
+  }
+
+  // 공통 콘텐츠
+
+  .book {
+    // background: #ff0;
+    &__cover {
+      width: 70%;
+      @include autoMargin;
+      text-align: center;
+      &Caption {
+        font-weight: 700;
+      }
+    }
+    &__info {
+      @include flexbox($wrap: wrap, $justify: center);
+      column-gap: rem(8px);
+    }
+    @at-root .ratingStar {
+      text-align: center;
+      width: 100%;
+      // font-size: rem(24px);
+    }
+  }
+  .news {
+    @at-root .iframeWrapper {
+      @include ratio;
+    }
+  }
+  .board {
+    position: relative;
+    &__item {
+      @include flexbox;
+      margin: 8px 0;
+    }
+    &__link {
+      flex-grow: 1;
+      @include textOver;
+    }
+    &__date {
+      // flex-basis: fit-content;
+      white-space: nowrap;
+    }
+    &__more {
+      @include posRightTop;
+    }
+  }
+  .favorite {
+  }
+  .twitter {
+    &__userProfile {
+      width: 20%;
+      @include ratio(1, 1);
+      &Image {
+        @include respons(width, 100%);
+        border-radius: 50%;
+        @include fit(cover, 100%, 100%);
+      }
+    }
+  }
+}

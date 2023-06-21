@@ -1,1 +1,48 @@
-// sprite.scss
+@use "color" as var;
+@use "unit" as *;
+@use "flexbox" as *;
+
+// map 타입
+$colors: (
+  "Book": var.$green,
+  "News": var.$yellow,
+  "Board": var.$brown,
+  "Favorite": var.$orange,
+  "Twitter": var.$blue,
+);
+
+// JS의 for...in과 유사
+// map 타입(colors) 안에서 키($section)와 키 값($value)을 다음 rule set에서 각각 반복(each)
+@each $section, $color in $colors {
+  .accent#{$section} {
+    color: $color;
+  }
+}
+
+// 스프라이트 배경이미지
+.sprite {
+  min-height: rem(60px);
+  background-image: url(./../assets/images/sprite_main.png);
+  background-repeat: no-repeat;
+  padding-left: rem(64px);
+  font-size: rem(18px);
+  font-weight: 700;
+  @include flexbox(column, center);
+  [class*="enTitle"] {
+    font-size: rem(16px);
+    font-weight: normal;
+  }
+
+  // list 타입
+  // JS의 배열과 유사
+  $sprites: Book, Board, News, Favorite, Twitter;
+  $x: 0;
+  $y: 0;
+  @each $sprite in $sprites {
+    &#{$sprite} {
+      background-position: $x $y;
+    }
+    // 순환 한 번 당 초기값 0에서 -115xp 만큼 더하기
+    $y: $y - 115px;
+  }
+}

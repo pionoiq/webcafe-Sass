@@ -25,7 +25,7 @@
     background: $brown;
     &__list {
       @include containerMax;
-      @include flexbox($justify: space-between);
+      @include flexbox;
       @include paddingX(4px);
       @include paddingY(16px);
       font-size: rem(18px);
